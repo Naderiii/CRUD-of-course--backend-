@@ -2,8 +2,8 @@ require("dotenv").config();
 
 const Logger = require("./middlewares/logger");
 const authentication = require("./middlewares/authentication");
-const helmet = require("helmet")
-const morgan = require("morgan")
+const helmet = require("helmet")   // helps secure your app by setting various HTTP headers.
+const morgan = require("morgan")   // HTTP request logger
 
 const dbDebug = require("debug")("db")  //debug on .env
 
@@ -21,20 +21,21 @@ app.listen(port, () => {
   console.log(`listen on port ${port}`);
 });
 
-//----------------------------- middleware
+//----------------------------- middleware 
 app.use(Logger);
 app.use(authentication);
-app.use(express.urlencoded((extended = true)));       // convert key=value to JSON in req.body
+
+app.use(express.urlencoded({extended: true}));       // convert key=value to JSON in req.body
 app.use(express.static('public'))                    // for static file
-app.use(helmet());                                  // helps secure your app by setting various HTTP headers.
+app.use(helmet());                                  
 
-if (app.get("env") === "development") app.use(morgan("tiny"))      // HTTP request logger
+if (app.get("env") === "development")   app.use(morgan("tiny"));      
 
-dbDebug("Hello from startup debug")
+// dbDebug("Hello from startup debug")
 
 //router
 app.use("/api/courses" , coursesRoute );
-app.use("/api/home", homeRoute)
+app.use("/", homeRoute)
 
 //----------------------------- 
 
