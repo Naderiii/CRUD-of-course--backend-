@@ -1,4 +1,4 @@
-const CoursesModel = require('../models/courses-model-mysql');
+const CoursesModel = require('../models/courses-model');
 
 const getCourse = (req, res) => {
   CoursesModel.getCourse(parseInt(req.params.id))
