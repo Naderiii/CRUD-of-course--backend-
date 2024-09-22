@@ -3,11 +3,11 @@ require("dotenv").config();
 const Logger = require("./middlewares/logger");
 const authentication = require("./middlewares/authentication");
 const helmet = require("helmet")
-const helmet = require("morgan")
+const morgan = require("morgan")
 
 const dbDebug = require("debug")("db")  //debug on .env
 
-const coursesRoute = require("./routers/courses_routes")
+const coursesRoute = require("./routers/coursesRoutes")
 
 //--------------------------- create server on .env
 
@@ -19,7 +19,6 @@ const port = process.env.APP_PORT || 3000;
 app.listen(port, () => {
   console.log(`listen on port ${port}`);
 });
-
 
 //----------------------------- middleware
 app.use(Logger);
