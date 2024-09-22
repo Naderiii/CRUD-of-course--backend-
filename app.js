@@ -24,11 +24,11 @@ app.listen(port, () => {
 //----------------------------- middleware
 app.use(Logger);
 app.use(authentication);
-app.use(express.urlencoded((extended = true))); // convert key=value to JSON in req.body
-app.use(express.static('public'))  // for static file
-app.use(helmet()); // helps secure your app by setting various HTTP headers.
+app.use(express.urlencoded((extended = true)));       // convert key=value to JSON in req.body
+app.use(express.static('public'))                    // for static file
+app.use(helmet());                                  // helps secure your app by setting various HTTP headers.
 
-if (app.get("env") === "development") app.use(morgan("tiny")) // HTTP request logger
+if (app.get("env") === "development") app.use(morgan("tiny"))      // HTTP request logger
 
 dbDebug("Hello from startup debug")
 
