@@ -1,5 +1,3 @@
-
-
 const getCourses = async () => {
   const [result] = await pool.query("select * from courses");
   return result;
