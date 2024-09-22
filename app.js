@@ -3,7 +3,7 @@ const Logger = require("./middlewares/logger");
 const authentication = require("./middlewares/authentication");
 const helmet = require("helmet")
 const helmet = require("morgan")
-const startupDebug = require("debug")("startup")  //debug on .env
+const dbDebug = require("debug")("db")  //debug on .env
 
 //--------------------------- create server on .env
 const express = require("express");
@@ -27,7 +27,7 @@ app.use(helmet()); // helps secure your app by setting various HTTP headers.
 
 if (app.get("env") === "development") app.use(morgan("tiny")) // HTTP request logger
 
-startupDebug("Hello from startup debug")
+dbDebug("Hello from startup debug")
 
 //----------------------------- 
 
