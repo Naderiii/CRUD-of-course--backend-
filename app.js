@@ -21,7 +21,7 @@ app.listen(port, () => {
   console.log(`listen on port ${port}`);
 });
 
-//----------------------------- middleware
+//----------------------------- middleware 
 app.use(Logger);
 app.use(authentication);
 
@@ -31,7 +31,7 @@ app.use(helmet());
 
 if (app.get("env") === "development")   app.use(morgan("tiny"));      
 
-dbDebug("Hello from startup debug")
+// dbDebug("Hello from startup debug")
 
 //router
 app.use("/api/courses" , coursesRoute );
