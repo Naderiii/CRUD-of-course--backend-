@@ -7,7 +7,8 @@ const morgan = require("morgan")
 
 const dbDebug = require("debug")("db")  //debug on .env
 
-const coursesRoute = require("./routers/coursesRoutes")
+const coursesRoute = require("./routers/courses-routes")
+const homeRoute = require("./routers/home-route")
 
 //--------------------------- create server on .env
 
@@ -31,7 +32,9 @@ if (app.get("env") === "development") app.use(morgan("tiny")) // HTTP request lo
 
 dbDebug("Hello from startup debug")
 
-app.use("/api/courses" , coursesRoute );  // middleware of route
+//router
+app.use("/api/courses" , coursesRoute );
+app.use("/api/home", homeRoute)
 
 //----------------------------- 
 

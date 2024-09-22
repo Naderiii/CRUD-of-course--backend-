@@ -1,3 +1,5 @@
+
+
 const getCourse = (req, res) => {};
 const getCourses = (req, res) => {};
 const insertCourse = (req, res) => {};
