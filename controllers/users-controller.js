@@ -4,6 +4,7 @@ const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
+
 //-------------------------- register ---------------------------
 
 const register = async (req, res, next) => {
