@@ -1,5 +1,5 @@
-const { result } = require('underscore');
-const CoursesModel = require('../models/courses-model')
+// const { result } = require('underscore');
+const CoursesModel = require('../models/courses-model-mysql')
 
 
 const getCourse = (req, res) => {
