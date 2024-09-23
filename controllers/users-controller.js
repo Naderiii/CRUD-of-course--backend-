@@ -32,7 +32,9 @@ const register = async (req, res, next) => {
 
   const newUser = await UsersModel.getUserByEmail(req.body.email);
 
-  res.send(_.pick(newUser, ["id", "username", "email"]));   //it dosen't show password
+  const token =jwt.sign({ id: user.id }, "your_secret_key_100%_secret");
+
+  res.header("Authorization", token).send(_.pick(newUser, ["id", "username", "email"]));   //it dosen't show password
 };
 
 //--------------------------------- login ---------------------------
