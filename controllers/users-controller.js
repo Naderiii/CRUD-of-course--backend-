@@ -3,7 +3,7 @@ const Joi = require("joi");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+require('dotenv').config();
 //-------------------------- register ---------------------------
 
 const register = async (req, res, next) => {
@@ -32,7 +32,7 @@ const register = async (req, res, next) => {
   const newUser = await UsersModel.getUserByEmail(req.body.email);
 
   // Use newUser to generate the JWT token
-  const token = jwt.sign({ id: newUser.id }, "your_secret_key_100%_secret");
+  const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY);
 
   // Respond with the token and user info (excluding the password)
   res.header("Authorization", token).send(_.pick(newUser, ["id", "username", "email"]));
@@ -58,7 +58,7 @@ const login = async (req, res, next) => {
     return res.status(400).send("email or password is invalid");
 
   // Generate JWT token upon successful login
-  const token = jwt.sign({ id: user.id }, "your_secret_key_100%_secret");
+  const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
   res.send(token);
 };
 
