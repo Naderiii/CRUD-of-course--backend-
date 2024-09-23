@@ -4,13 +4,13 @@ const _ = require("lodash");
 const bcrypt = require("bcrypt");
 
 const register = async (req, res, next) => {
+
   const schema = {
-    username: Joi.string().min(3).max(50).required().messages({
-      "string.min": "نعداد کاراکتر",
-    }),
+    username: Joi.string().min(3).max(50).required().messages({"string.min": "Minimum characters required"}),
     email: Joi.string().email().required(),
     password: Joi.string().min(5).max(50).required(),
   };
+
   const validateResult = Joi.object(schema).validate(req.body);
   if (validateResult.error)
     return res.send(validateResult.error.details[0].message);
@@ -20,8 +20,8 @@ const register = async (req, res, next) => {
 
   const hashPassword = await bcrypt.hash(req.body.password, 10);
 
-  const result = await UsersModel.inserUser(
-    req.body.name,
+  const result = await UsersModel.insertUser(
+    req.body.username,
     req.body.email,
     hashPassword
   );
@@ -31,6 +31,9 @@ const register = async (req, res, next) => {
 
   res.send(_.pick(newUser, ["id", "name", "email"]));
 };
+
+
+
 
 const login = async (req, res, next) => {
   const schema = {

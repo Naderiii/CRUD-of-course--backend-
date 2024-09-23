@@ -1,10 +1,11 @@
 const pool = require("../utilities/mysql_database");
 
 class UsersModel {
-  static inserUser = async(name , email , password) =>{
+  
+  static insertUser = async(username , email , password) =>{
     const [result] = await pool.query(`insert into users 
-    (id , name , email , password) 
-    values ( uuid() , ? ,? , ?)` , [name , email , password])
+    (username , email , password, id ) 
+    values (? ,? , ?, uuid())` , [username , email , password])
     return result
   }
 
