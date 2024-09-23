@@ -36,7 +36,7 @@ if (app.get("env") === "development")   app.use(morgan("tiny"));
 //router
 app.use("/api/courses" , coursesRoute );
 app.use("/", homeRoute)
-
+app.use("/api/users", userRoute)
 //----------------------------- 
 
 
