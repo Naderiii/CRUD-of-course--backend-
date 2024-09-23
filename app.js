@@ -9,7 +9,9 @@ const dbDebug = require("debug")("db")  //debug on .env
 
 const coursesRoute = require("./routers/courses-routes")
 const homeRoute = require("./routers/home-route")
-const userRoute = require("./routers/users-route")
+const usersRoute = require("./routers/users-route")
+
+const errorHandler = require("./middlewares/error_handler");
 
 //--------------------------- create server on .env
 
@@ -25,6 +27,7 @@ app.listen(port, () => {
 //----------------------------- middleware 
 app.use(Logger);
 app.use(authentication);
+app.user(errorHandler)
 
 app.use(express.urlencoded({extended: true}));       // convert key=value to JSON in req.body
 app.use(express.static('public'))                    // for static file
@@ -36,8 +39,9 @@ if (app.get("env") === "development")   app.use(morgan("tiny"));
 
 //router
 app.use("/api/courses" , coursesRoute );
+app.use("/api/users", usersRoute)
 app.use("/", homeRoute)
-app.use("/api/users", userRoute)
+
 //----------------------------- 
 
 
