@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 const register = async (req, res, next) => {
   const schema = {
-    name: Joi.string().min(3).max(50).required().messages({
+    username: Joi.string().min(3).max(50).required().messages({
       "string.min": "نعداد کاراکتر",
     }),
     email: Joi.string().email().required(),
