@@ -3,6 +3,7 @@ const Joi = require("joi");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 
+
 const register = async (req, res, next) => {
 
   const schema = {
@@ -29,7 +30,7 @@ const register = async (req, res, next) => {
 
   const newUser = await UsersModel.getUserByEmail(req.body.email);
 
-  res.send(_.pick(newUser, ["id", "name", "email"]));
+  res.send(_.pick(newUser, ["id", "username", "email"]));   //it dosen't show password
 };
 
 
