@@ -1,21 +1,21 @@
 const { result } = require("underscore");
 const CoursesModel = require("../models/courses-model");
-const {tryCatchHanddler} = require("../utilities/trycatch_handler");
+const { tryCatchHandler } = require("../utilities/trycatch_handler");
 
 
-const getCourse = tryCatchHanddler(async (req, res) => {
+const getCourse = tryCatchHandler(async (req, res) => {
   const result = await CoursesModel.getCourse(parseInt(req.params.id));
   if (!result)
     return res.status(404).send("Course with the given ID not found");
   res.send(result);
 });
 
-const getCourses = tryCatchHanddler(async (req, res) => {
+const getCourses = tryCatchHandler(async (req, res) => {
   const result = await CoursesModel.getCourses();
   res.send(result);
 });
 
-const insertCourse = tryCatchHanddler(async (req, res) => {
+const insertCourse = tryCatchHandler(async (req, res) => {
   if (!req.body.name || req.body.name.length < 3) {
     return res
       .status(400)
@@ -25,7 +25,7 @@ const insertCourse = tryCatchHanddler(async (req, res) => {
   res.send(result);
 });
 
-const updateCourse = tryCatchHanddler(async (req, res) => {
+const updateCourse = tryCatchHandler(async (req, res) => {
   const course = await CoursesModel.getCourse(parseInt(req.params.id));
   if (!course)
     return res.status(404).send("Course with the given ID not found");
@@ -42,7 +42,7 @@ const updateCourse = tryCatchHanddler(async (req, res) => {
   res.send(updatedCourse);
 });
 
-const deleteCourse = tryCatchHanddler(async (req, res) => {
+const deleteCourse = tryCatchHandler(async (req, res) => {
   const course = await CoursesModel.getCourse(parseInt(req.params.id));
   if (!course)
     return res.status(404).send("Course with the given ID not found");
