@@ -9,7 +9,6 @@ const dbDebug = require("debug")("db")  //debug on .env
 
 const coursesRoute = require("./routers/courses-routes")
 const homeRoute = require("./routers/home-route")
-const userRoute = require("./routers/users-route")
 
 //--------------------------- create server on .env
 
@@ -37,7 +36,7 @@ if (app.get("env") === "development")   app.use(morgan("tiny"));
 //router
 app.use("/api/courses" , coursesRoute );
 app.use("/", homeRoute)
-app.use("/api/users", userRoute)
+
 //----------------------------- 
 
 
