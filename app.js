@@ -11,6 +11,8 @@ const coursesRoute = require("./routers/courses-routes")
 const homeRoute = require("./routers/home-route")
 const usersRoute = require("./routers/users-route")
 
+const errorHandler = require("./middlewares/error_handler");
+
 //--------------------------- create server on .env
 
 const express = require("express");
@@ -25,6 +27,7 @@ app.listen(port, () => {
 //----------------------------- middleware 
 app.use(Logger);
 app.use(authentication);
+app.user(errorHandler)
 
 app.use(express.urlencoded({extended: true}));       // convert key=value to JSON in req.body
 app.use(express.static('public'))                    // for static file
