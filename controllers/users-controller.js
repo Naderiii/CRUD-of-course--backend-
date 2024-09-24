@@ -4,6 +4,7 @@ const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { tryCatchHandler } = require("../utilities/trycatch_handler");
+const AppError = require("../utilities/app_error");
 
 //-------------------------- register ---------------------------
 
@@ -24,7 +25,9 @@ const register = tryCatchHandler(async (req, res, next) => {
     throw validateResult.error;
 
   const user = await UsersModel.getUserByEmail(req.body.email);
-  if (user) return res.status(400).send("user already registered");
+  if (user) 
+    // return res.status(400).send("user already registered");
+    throw new AppError(100, "user already registered", 400);
 
   const hashPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -54,15 +57,18 @@ const login = tryCatchHandler(async (req, res, next) => {
 
   const validateResult = Joi.object(schema).validate(req.body);
   if (validateResult.error)
-    return res.send(validateResult.error.details[0].message);
+    //return res.send(validateResult.error.details[0].message);
+  throw validateResult.error;
 
   const user = await UsersModel.getUserByEmail(req.body.email);
   if (!user) 
-    return res.status(400).send("email or password is invalid");
+    //return res.status(400).send("email or password is invalid");
+    throw new AppError(100, "email or password is invalid", 400);
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword)
-    return res.status(400).send("email or password is invalid");
+    //return res.status(400).send("email or password is invalid");
+  throw new AppError(100, "email or password is invalid", 400);
 
   const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
   res.send(token);
