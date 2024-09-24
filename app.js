@@ -24,7 +24,7 @@ app.listen(port, () => {
 
 //----------------------------- middleware 
 app.use(Logger);
-//app.use(authentication);
+app.use(authentication);
 
 app.use(express.urlencoded({extended: true}));       // convert key=value to JSON in req.body
 app.use(express.static('public'))                    // for static file
