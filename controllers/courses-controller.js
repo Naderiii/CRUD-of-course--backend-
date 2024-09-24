@@ -1,5 +1,6 @@
+const { result } = require("underscore");
 const CoursesModel = require("../models/courses-model");
-const tryCatchHanddler = require("../utilities/trycatch_handler");
+const {tryCatchHanddler} = require("../utilities/trycatch_handler");
 
 
 const getCourse = tryCatchHanddler(async (req, res) => {
