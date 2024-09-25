@@ -13,7 +13,7 @@ const coursesRoute = require("./routers/courses-routes");
 const homeRoute = require("./routers/home-route");
 const usersRoute = require("./routers/users-route");
 
-//--------------------------- Create server from .env
+//-------------------------- Create server from .env
 const app = express();
 app.use(express.json());
 
@@ -25,7 +25,7 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-//----------------------------- Middleware
+//---------------------------- Middleware
 app.use(Logger);
 app.use(authentication);
 
@@ -41,7 +41,7 @@ if (app.get("env") === "development") {
 // Uncomment to enable debug logging.
 // dbDebug("Hello from startup debug");
 
-//----------------------------- Routes
+//---------------------------- Routes
 app.use("/api/courses", coursesRoute);
 app.use("/api/users", usersRoute);
 app.use("/", homeRoute);
