@@ -1,0 +1,1 @@
+{"level":"error","message":"User already registered","method":"POST","name":"Error","time":"2024-09-25T12:50:38.422Z","timestamp":"2024-09-25T12:50:38.431Z","url":"/api/users/register"}
