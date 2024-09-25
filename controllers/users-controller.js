@@ -9,25 +9,25 @@ const AppError = require("../utilities/app_error");
 //-------------------------- register ---------------------------
 
 const register = tryCatchHandler(async (req, res, next) => {
-  const schema = {
+  const schema = Joi.object({
     username: Joi.string()
       .min(3)
       .max(50)
       .required()
-      .messages({ "string.min": "Minimum characters required" }),
+      .messages({ "string.min": "Minimum characters for username required" }),
     email: Joi.string().email().required(),
     password: Joi.string().min(5).max(50).required(),
-  };
+  });
 
-  const validateResult = Joi.object(schema).validate(req.body);
-  if (validateResult.error)
-    // return res.send(validateResult.error.details[0].message);
-    throw validateResult.error;
+  const { error } = schema.validate(req.body);
+  if (error) {
+    throw new AppError(400, error.details[0].message, 400);
+  }
 
   const user = await UsersModel.getUserByEmail(req.body.email);
-  if (user) 
-    // return res.status(400).send("user already registered");
-    throw new AppError(100, "user already registered", 400);
+  if (user) {
+    throw new AppError(100, "User already registered", 400);
+  }
 
   const hashPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -37,38 +37,38 @@ const register = tryCatchHandler(async (req, res, next) => {
     hashPassword
   );
   console.log(result);
-
+  
   const newUser = await UsersModel.getUserByEmail(req.body.email);
 
   const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY);
 
   res
     .header("Authorization", token)
-    .send(_.pick(newUser, ["id", "username", "email"])); //it dosen't show password
+    .send(_.pick(newUser, ["id", "username", "email"])); // it doesn't show password
 });
 
 //--------------------------------- login ---------------------------
 
 const login = tryCatchHandler(async (req, res, next) => {
-  const schema = {
+  const schema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().min(5).max(50).required(),
-  };
+  });
 
-  const validateResult = Joi.object(schema).validate(req.body);
-  if (validateResult.error)
-    //return res.send(validateResult.error.details[0].message);
-  throw validateResult.error;
+  const { error } = schema.validate(req.body);
+  if (error) {
+    throw new AppError(400, error.details[0].message, 400);
+  }
 
   const user = await UsersModel.getUserByEmail(req.body.email);
-  if (!user) 
-    //return res.status(400).send("email or password is invalid");
-    throw new AppError(100, "email or password is invalid", 400);
+  if (!user) {
+    throw new AppError(100, "Email or password is invalid", 400);
+  }
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
-  if (!validPassword)
-    //return res.status(400).send("email or password is invalid");
-  throw new AppError(100, "email or password is invalid", 400);
+  if (!validPassword) {
+    throw new AppError(100, "Email or password is invalid", 400);
+  }
 
   const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
   res.send(token);

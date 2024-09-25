@@ -16,12 +16,12 @@ const getCourses = tryCatchHandler(async (req, res) => {
 });
 
 const insertCourse = tryCatchHandler(async (req, res) => {
-  if (!req.body.name || req.body.name.length < 3) {
+  if (!req.body.title || req.body.title.length < 3) {
     return res
       .status(400)
-      .send("Name is required and must be at least 3 characters long");
+      .send("Title is required and must be at least 3 characters long");
   }
-  const result = await CoursesModel.insertCourse(req.body.name);
+  const result = await CoursesModel.insertCourse(req.body.title);
   res.send(result);
 });
 
@@ -30,14 +30,14 @@ const updateCourse = tryCatchHandler(async (req, res) => {
   if (!course)
     return res.status(404).send("Course with the given ID not found");
 
-  if (!req.body.name || req.body.name.length < 3) {
+  if (!req.body.title || req.body.title.length < 3) {
     return res
       .status(400)
-      .send("Name is required and must be at least 3 characters long");
+      .send("Title is required and must be at least 3 characters long");
   }
   const updatedCourse = await CoursesModel.updateCourse(
     parseInt(req.params.id),
-    req.body.name
+    req.body.title
   );
   res.send(updatedCourse);
 });

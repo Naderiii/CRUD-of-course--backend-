@@ -27,7 +27,6 @@ app.listen(port, () => {
 //----------------------------- middleware 
 app.use(Logger);
 app.use(authentication);
-app.use(errorHandler)
 
 app.use(express.urlencoded({extended: true}));       // convert key=value to JSON in req.body
 app.use(express.static('public'))                    // for static file
@@ -41,6 +40,8 @@ if (app.get("env") === "development")   app.use(morgan("tiny"));
 app.use("/api/courses" , coursesRoute );
 app.use("/api/users", usersRoute)
 app.use("/", homeRoute)
+
+app.use(errorHandler)
 
 //----------------------------- 
 
