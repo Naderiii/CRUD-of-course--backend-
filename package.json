@@ -1,5 +1,5 @@
 {
-  "name": "crud-of-course-(backend)",
+  "name": "course and user management API",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
